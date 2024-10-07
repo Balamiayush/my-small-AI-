@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Generative AI Prompt</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f0f0f0;
+    }
+    h1 {
+        color: #333;
+        text-align: center;
+    }
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    h2 {
+        margin-top: 30px;
+        color: #333;
+    }
+    p {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<body>
+    <h1>Google Generative AI</h1>
+    <form action="/generate" method="POST">
+        <label for="prompt">Enter your prompt:</label>
+        <input type="text" id="prompt" name="prompt" required>
+        <button type="submit">Generate</button>
+    </form>
+    <% if (result) { %>
+        <h2>Generated Response:</h2>
+        <p id="generated-text"><%= result %></p>
+        <button id="voice-btn">Voice</button>
+    <% } %>
+
+    <script>
+        // Get references to elements
+        const voiceBtn = document.getElementById('voice-btn');
+        const generatedText = document.getElementById('generated-text');
+        let speech = null;
+
+        voiceBtn.addEventListener('click', function() {
+            const text = generatedText.innerText;
+
+            // If there's ongoing speech, cancel it
+            if (speechSynthesis.speaking || speechSynthesis.paused) {
+                speechSynthesis.cancel();
+            }
+
+            // Create new speech instance
+            speech = new SpeechSynthesisUtterance(text);
+            speechSynthesis.speak(speech);
+        });
+    </script>
+</body>
+</html>
